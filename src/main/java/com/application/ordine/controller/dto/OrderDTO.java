@@ -26,7 +26,7 @@ import lombok.ToString;
 @ToString
 
 public class OrderDTO implements Dto {
-	
+
 	@NotNull
 	private String transactionId;
 	@NotNull
@@ -35,10 +35,10 @@ public class OrderDTO implements Dto {
 	@JsonProperty("typeOfOrder")
 	private OrderType typeOfOrder;
 	@NotNull
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}")
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}")
 	private LocalDateTime orderedAt;
 	@NotNull
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}")
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}")
 	private LocalDateTime deliveredAt;
 	@NotNull
 	@Positive
@@ -48,7 +48,5 @@ public class OrderDTO implements Dto {
 	private Long quantity;
 	@NotNull
 	private Boolean isInStock;
-	
-	
+
 }
-	

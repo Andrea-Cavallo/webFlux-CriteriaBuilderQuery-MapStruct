@@ -29,7 +29,7 @@ import lombok.ToString;
 @ToString
 @Mapper
 public class Order {
-	
+
 	@NotNull
 	private String transactionId;
 	@NotNull
@@ -51,5 +51,4 @@ public class Order {
 	@NotNull
 	private Boolean isInStock;
 
-	
 }
