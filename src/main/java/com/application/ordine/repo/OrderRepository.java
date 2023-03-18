@@ -16,56 +16,45 @@ public interface OrderRepository extends MongoRepository<Order, ObjectId> {
 	MongoTemplate getMongoTemplate();
 
 	default List<Order> findOrdersByCriteria(String userName, LocalDateTime orderedAt, LocalDateTime deliveredAt,
-			Double minPrice, Double maxPrice) {
-		Criteria criteria = new Criteria();
+	        Double minPrice, Double maxPrice) {
+	    Query query = new Query();
+	    buildUserCriteria(userName, query);
+	    buildDateRangeCriteria(orderedAt, deliveredAt, query);
+	    buildPriceRangeCriteria(minPrice, maxPrice, query);
 
-		if (userName != null) {
-			criteria.and("userName").is(userName);
-		}
-
-		if (orderedAt != null && deliveredAt != null) {
-			criteria.andOperator(Criteria.where("orderedAt").gte(orderedAt),
-					Criteria.where("deliveredAt").lte(deliveredAt));
-		} else if (orderedAt != null) {
-			criteria.and("orderedAt").gte(orderedAt);
-		} else if (deliveredAt != null) {
-			criteria.and("deliveredAt").lte(deliveredAt);
-		}
-
-		if (minPrice != null || maxPrice != null) {
-			Criteria priceCriteria = new Criteria();
-			if (minPrice != null) {
-				priceCriteria.gte(minPrice);
-			}
-			if (maxPrice != null) {
-				priceCriteria.lte(maxPrice);
-			}
-			criteria.and("price").is(priceCriteria);
-		}
-
-		Query query = new Query(criteria);
-		if (userName != null) {
-			query.addCriteria(Criteria.where("userName").is(userName));
-		}
-		if (orderedAt != null && deliveredAt != null) {
-			query.addCriteria(Criteria.where("orderedAt").gte(orderedAt).lte(deliveredAt).and("deliveredAt")
-					.lte(deliveredAt).gte(orderedAt));
-		} else if (orderedAt != null) {
-			query.addCriteria(Criteria.where("orderedAt").gte(orderedAt));
-		} else if (deliveredAt != null) {
-			query.addCriteria(Criteria.where("deliveredAt").lte(deliveredAt));
-		}
-		if (minPrice != null || maxPrice != null) {
-			Criteria priceCriteria = new Criteria();
-			if (minPrice != null) {
-				priceCriteria.gte(minPrice);
-			}
-			if (maxPrice != null) {
-				priceCriteria.lte(maxPrice);
-			}
-			query.addCriteria(Criteria.where("price").is(priceCriteria));
-		}
-
-		return getMongoTemplate().find(query, Order.class);
+	    return getMongoTemplate().find(query, Order.class);
 	}
+
+	private void buildUserCriteria(String userName, Query query) {
+	    if (userName != null) {
+	        query.addCriteria(Criteria.where("userName").is(userName));
+	    }
+	}
+
+	private void buildDateRangeCriteria(LocalDateTime orderedAt, LocalDateTime deliveredAt, Query query) {
+	    if (orderedAt != null || deliveredAt != null) {
+	        Criteria dateRangeCriteria = new Criteria();
+	        if (orderedAt != null) {
+	            dateRangeCriteria.and("orderedAt").gte(orderedAt);
+	        }
+	        if (deliveredAt != null) {
+	            dateRangeCriteria.and("deliveredAt").lte(deliveredAt);
+	        }
+	        query.addCriteria(dateRangeCriteria);
+	    }
+	}
+
+	private void buildPriceRangeCriteria(Double minPrice, Double maxPrice, Query query) {
+	    if (minPrice != null || maxPrice != null) {
+	        Criteria priceRangeCriteria = new Criteria();
+	        if (minPrice != null) {
+	            priceRangeCriteria.and("price").gte(minPrice);
+	        }
+	        if (maxPrice != null) {
+	            priceRangeCriteria.and("price").lte(maxPrice);
+	        }
+	        query.addCriteria(priceRangeCriteria);
+	    }
+	}
+
 }
