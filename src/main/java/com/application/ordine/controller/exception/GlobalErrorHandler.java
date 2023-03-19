@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
+import org.springframework.web.server.ResponseStatusException;
 
 import reactor.core.publisher.Mono;
 
@@ -34,4 +35,12 @@ public class GlobalErrorHandler {
 //        log.error("Exception Caught in OrderNotFoundException: {}", ex.getMessage(), ex);
 //        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()));
 //    }
+	
+	   @ExceptionHandler(ResponseStatusException.class)
+	    public ResponseEntity<String> handleResponseStatusException(ResponseStatusException ex) {
+	        if (ex.getStatus() == HttpStatus.NOT_FOUND) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("404");
+	        }
+	        return ResponseEntity.status(ex.getStatus()).body(ex.getReason());
+	    }
 }

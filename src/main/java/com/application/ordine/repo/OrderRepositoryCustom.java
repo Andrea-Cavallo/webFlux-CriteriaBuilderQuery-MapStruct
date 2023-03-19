@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import com.application.ordine.documents.Order;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface OrderRepositoryCustom {
 
 	Flux<Order> findOrdersByCriteria(String userName, LocalDateTime orderedAt, LocalDateTime deliveredAt,
 			Double minPrice, Double maxPrice);
+	public Mono<Order> save(Order orderRequest) ;
 
 }

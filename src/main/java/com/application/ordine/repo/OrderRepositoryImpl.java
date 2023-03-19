@@ -12,10 +12,15 @@ import org.springframework.stereotype.Repository;
 import com.application.ordine.documents.Order;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
+	private static final String USER_NAME = "userName";
+	private static final String PRICE = "price";
+	private static final String DELIVERED_AT = "deliveredAt";
+	private static final String ORDERED_AT = "orderedAt";
 	private final ReactiveMongoTemplate reactiveMongoTemplate;
 
 	@Autowired
@@ -30,14 +35,19 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 		buildUserCriteria(userName, query);
 		buildDateRangeCriteria(orderedAt, deliveredAt, query);
 		buildPriceRangeCriteria(minPrice, maxPrice, query);
-		query.with(Sort.by(Sort.Direction.DESC, "orderedAt")); // example of sorting the results by orderedAt field
+		query.with(Sort.by(Sort.Direction.DESC, ORDERED_AT)); 
 
 		return reactiveMongoTemplate.find(query, Order.class);
+	}
+	
+	
+	public Mono<Order> save(Order orderRequest) {
+		return reactiveMongoTemplate.save(orderRequest);
 	}
 
 	private void buildUserCriteria(String userName, Query query) {
 		if (userName != null) {
-			query.addCriteria(Criteria.where("userName").is(userName));
+			query.addCriteria(Criteria.where(USER_NAME).is(userName));
 		}
 	}
 
@@ -45,10 +55,10 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 		if (orderedAt != null || deliveredAt != null) {
 			Criteria dateRangeCriteria = new Criteria();
 			if (orderedAt != null) {
-				dateRangeCriteria.and("orderedAt").gte(orderedAt);
+				dateRangeCriteria.and(ORDERED_AT).gte(orderedAt);
 			}
 			if (deliveredAt != null) {
-				dateRangeCriteria.and("deliveredAt").lte(deliveredAt);
+				dateRangeCriteria.and(DELIVERED_AT).lte(deliveredAt);
 			}
 			query.addCriteria(dateRangeCriteria);
 		}
@@ -58,10 +68,10 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 		if (minPrice != null || maxPrice != null) {
 			Criteria priceRangeCriteria = new Criteria();
 			if (minPrice != null) {
-				priceRangeCriteria.and("price").gte(minPrice);
+				priceRangeCriteria.and(PRICE).gte(minPrice);
 			}
 			if (maxPrice != null) {
-				priceRangeCriteria.and("price").lte(maxPrice);
+				priceRangeCriteria.and(PRICE).lte(maxPrice);
 			}
 			query.addCriteria(priceRangeCriteria);
 		}
