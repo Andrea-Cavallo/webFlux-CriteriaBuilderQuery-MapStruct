@@ -9,7 +9,9 @@ import reactor.core.publisher.Mono;
 
 public interface OrderService {
 
-	public Mono<List<OrderDTO>> findOrdersByCriteria(String userName, LocalDateTime orderedAt,
-			LocalDateTime deliveredAt, Double minPrice, Double maxPrice);
+	Mono<List<OrderDTO>> findOrdersByCriteria(String userName, LocalDateTime orderedAt, LocalDateTime deliveredAt,
+			Double minPrice, Double maxPrice);
+
+	Mono<OrderDTO> createOrder(OrderDTO orderRequest);
 
 }

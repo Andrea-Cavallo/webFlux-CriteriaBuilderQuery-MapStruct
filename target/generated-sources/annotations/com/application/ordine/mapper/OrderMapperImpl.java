@@ -1,20 +1,16 @@
 package com.application.ordine.mapper;
 
 import com.application.ordine.controller.dto.OrderDTO;
-import com.application.ordine.controller.dto.OrderDTO.OrderDTOBuilder;
 import com.application.ordine.documents.Order;
-import com.application.ordine.documents.Order.OrderBuilder;
-import javax.annotation.processing.Generated;
-import javax.inject.Named;
-import javax.inject.Singleton;
+import javax.annotation.Generated;
+import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-18T16:00:22+0100",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
+    date = "2023-03-19T09:47:18+0100",
+    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
-@Singleton
-@Named
+@Component
 public class OrderMapperImpl implements OrderMapper {
 
     @Override
@@ -23,16 +19,15 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
-        OrderDTOBuilder orderDTO = OrderDTO.builder();
+        OrderDTO.OrderDTOBuilder orderDTO = OrderDTO.builder();
 
-        orderDTO.typeOfOrder( order.getTypeOfOrder() );
-        orderDTO.deliveredAt( order.getDeliveredAt() );
-        orderDTO.isInStock( order.getIsInStock() );
-        orderDTO.orderedAt( order.getOrderedAt() );
-        orderDTO.price( order.getPrice() );
-        orderDTO.quantity( order.getQuantity() );
         orderDTO.transactionId( order.getTransactionId() );
         orderDTO.userName( order.getUserName() );
+        orderDTO.orderedAt( order.getOrderedAt() );
+        orderDTO.deliveredAt( order.getDeliveredAt() );
+        orderDTO.price( order.getPrice() );
+        orderDTO.quantity( order.getQuantity() );
+        orderDTO.isInStock( order.getIsInStock() );
 
         return orderDTO.build();
     }
@@ -43,16 +38,15 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
-        OrderBuilder order = Order.builder();
+        Order.OrderBuilder order = Order.builder();
 
-        order.typeOfOrder( orderDTO.getTypeOfOrder() );
-        order.deliveredAt( orderDTO.getDeliveredAt() );
-        order.isInStock( orderDTO.getIsInStock() );
-        order.orderedAt( orderDTO.getOrderedAt() );
-        order.price( orderDTO.getPrice() );
-        order.quantity( orderDTO.getQuantity() );
         order.transactionId( orderDTO.getTransactionId() );
         order.userName( orderDTO.getUserName() );
+        order.orderedAt( orderDTO.getOrderedAt() );
+        order.deliveredAt( orderDTO.getDeliveredAt() );
+        order.price( orderDTO.getPrice() );
+        order.quantity( orderDTO.getQuantity() );
+        order.isInStock( orderDTO.getIsInStock() );
 
         return order.build();
     }

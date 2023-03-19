@@ -2,27 +2,41 @@ package com.application.ordine.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import com.application.ordine.controller.dto.OrderDTO;
 import com.application.ordine.documents.Order;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderMapper {
 
-	OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
+	 OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-	/**
-	 * please note: the typeOfOrder field between the two objects, while the
-	 * remaining fields are mapped automatically based on their names and types
-	 * 
-	 * @param Order
-	 * @return OrderDto
-	 */
+	    @Mappings({
+	        @Mapping(source = "transactionId", target = "transactionId"),
+	        @Mapping(source = "userName", target = "userName"),
+	        // Uncomment the following line if you want to use the typeOfOrder property
+	        // @Mapping(source = "typeOfOrder", target = "typeOfOrder"),
+	        @Mapping(source = "orderedAt", target = "orderedAt"),
+	        @Mapping(source = "deliveredAt", target = "deliveredAt"),
+	        @Mapping(source = "price", target = "price"),
+	        @Mapping(source = "quantity", target = "quantity"),
+	        @Mapping(source = "isInStock", target = "isInStock")
+	    })
+	    OrderDTO toDTO(Order order);
 
-	@Mapping(target = "typeOfOrder", source = "typeOfOrder")
-	OrderDTO toDTO(Order order);
+	    @Mappings({
+	        @Mapping(source = "transactionId", target = "transactionId"),
+	        @Mapping(source = "userName", target = "userName"),
+	        // Uncomment the following line if you want to use the typeOfOrder property
+	        // @Mapping(source = "typeOfOrder", target = "typeOfOrder"),
+	        @Mapping(source = "orderedAt", target = "orderedAt"),
+	        @Mapping(source = "deliveredAt", target = "deliveredAt"),
+	        @Mapping(source = "price", target = "price"),
+	        @Mapping(source = "quantity", target = "quantity"),
+	        @Mapping(source = "isInStock", target = "isInStock")
+	    })
+	    Order toEntity(OrderDTO orderDTO);
 
-	@Mapping(target = "typeOfOrder", source = "typeOfOrder")
-	Order toEntity(OrderDTO orderDTO);
 }

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({ "com.application.ordine.mapper" })
+@ComponentScan({ "com.application.ordine.*" })
 
 public class OrderApplication {
 

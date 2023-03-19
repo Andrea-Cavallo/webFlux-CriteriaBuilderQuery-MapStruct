@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyExtractors;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
+import com.application.ordine.controller.dto.OrderDTO;
 import com.application.ordine.service.OrderService;
 
 import reactor.core.publisher.Mono;
@@ -41,4 +44,9 @@ public class OrderHandler {
 				.switchIfEmpty(ServerResponse.notFound().build());
 	}
 
+	public Mono<ServerResponse> createOrder(ServerRequest request) {
+		return request.body(BodyExtractors.toMono(OrderDTO.class))
+				.flatMap(orderDTO -> orderService.createOrder(orderDTO).flatMap(createdOrder -> ServerResponse.ok()
+						.contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(createdOrder))));
+	}
 }
