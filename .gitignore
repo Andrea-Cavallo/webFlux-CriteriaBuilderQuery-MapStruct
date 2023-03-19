@@ -1,0 +1,58 @@
+# Spring Tool Suite (STS)
+/.apt_generated
+/.classpath
+/.factorypath
+/.project
+/.settings
+/.springBeans
+/.sts4-cache
+
+# Maven
+/target/
+
+# Gradle
+.gradle/
+/build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Mac Finder
+.DS_Store
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Thumbs.db and other Windows files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
