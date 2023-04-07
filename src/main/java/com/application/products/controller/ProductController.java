@@ -27,9 +27,12 @@ public class ProductController {
 
 				.GET(PRODUCTS, orderHandler::findProductsByCriteria)
 
+
 				.POST(PRODUCTS, orderHandler::createProduct)
 				.POST("orders", orderHandler::createOrder)
 				.POST("transcoding", orderHandler::transcode)
+
+				.POST(PRODUCTS, orderHandler::createProduct).POST("orders", orderHandler::createOrder)
 
 				.build();
 	}

@@ -33,12 +33,15 @@ public class ProductHandler {
 	}
 
 	public Mono<ServerResponse> findProductsByCriteria(ServerRequest request) {
-		String userName = request.queryParam(PRODUCTNAME).orElse(null);
+		String productName = request.queryParam(PRODUCTNAME).orElse(null);
+
+
+
 		Double minPrice = request.queryParam(MIN_PRICE).map(Double::parseDouble).orElse(null);
 		Double maxPrice = request.queryParam(MAX_PRICE).map(Double::parseDouble).orElse(null);
 
 		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-				.body(productService.findProductsByCriteria(userName, minPrice, maxPrice), List.class)
+				.body(productService.findProductsByCriteria(productName, minPrice, maxPrice), List.class)
 				.switchIfEmpty(buildError());
 	}
 
@@ -49,6 +52,8 @@ public class ProductHandler {
 	}
 
 	public Mono<ServerResponse> createOrder(ServerRequest request) {
+
+		System.out.println("REQ NELL HANDLER" + request.toString());
 		return request.body(BodyExtractors.toMono(OrderDTO.class))
 				.flatMap(orderDTO -> productService.createOrder(orderDTO).flatMap(orderCreated -> ServerResponse.ok()
 						.contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(orderCreated))));
@@ -64,6 +69,8 @@ public class ProductHandler {
 	}
 	
 	
+=======
+>>>>>>> 4c8b0f42d26b9af067e1ce43b106b84676a54274
 
 	public Mono<ServerResponse> buildError() {
 		return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
