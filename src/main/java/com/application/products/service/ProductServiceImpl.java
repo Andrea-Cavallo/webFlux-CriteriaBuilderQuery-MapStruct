@@ -94,13 +94,13 @@ public class ProductServiceImpl implements ProductService {
     	if (Boolean.TRUE.equals(productInfo.getIsInStock())) {
     		 return OrderDTO.OrderInfo.builder()
     	                .orderId(UUID.randomUUID().toString())
-    	                .orderedAt(LocalDateTime.now())
-    	                .deliveredAt(LocalDateTime.now().plusDays(15))
+    	                .orderedAt(LocalDateTime.now().toString())
+    	                .deliveredAt(LocalDateTime.now().plusDays(15).toString())
     	                .build();
         } else {
         	 return OrderDTO.OrderInfo.builder()
                      .orderId(UUID.randomUUID().toString())
-                     .orderedAt(LocalDateTime.now())
+                     .orderedAt(LocalDateTime.now().toString())
                      .build();
         }
        

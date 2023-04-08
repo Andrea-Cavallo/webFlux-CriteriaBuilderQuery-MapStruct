@@ -69,8 +69,7 @@ public class ProductHandler {
 	}
 	
 	
-=======
->>>>>>> 4c8b0f42d26b9af067e1ce43b106b84676a54274
+
 
 	public Mono<ServerResponse> buildError() {
 		return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)

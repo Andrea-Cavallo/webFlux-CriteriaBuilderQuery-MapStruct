@@ -38,9 +38,9 @@ public class OrderDTO {
 	public static class OrderInfo {
 		private String orderId;
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-		private LocalDateTime orderedAt;
+		private String orderedAt;
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-		private LocalDateTime deliveredAt;
+		private String deliveredAt;
 	}
 
 	@AllArgsConstructor
