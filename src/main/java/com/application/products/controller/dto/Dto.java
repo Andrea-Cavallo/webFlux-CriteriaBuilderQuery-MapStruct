@@ -1,4 +1,6 @@
 package com.application.products.controller.dto;
 
-public interface Dto {
+import java.io.Serializable;
+
+public interface Dto extends Serializable {
 }

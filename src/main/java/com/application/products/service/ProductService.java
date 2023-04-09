@@ -1,23 +1,17 @@
 package com.application.products.service;
 
-import java.util.List;
-
-import com.application.products.controller.dto.IncomingOrderDTO;
-
-import com.application.products.controller.dto.OrderDTO;
 import com.application.products.controller.dto.ProductDTO;
-
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 public interface ProductService {
 
-	Mono<List<ProductDTO>> findProductsByCriteria(String productName, Double minPrice, Double maxPrice);
+    Mono<List<ProductDTO>> findProductsByCriteria(String productName, Double minPrice, Double maxPrice);
 
-	Mono<ProductDTO> createProduct(ProductDTO productRequest);
+    Mono<ProductDTO> createProduct(ProductDTO productRequest);
 
-	Mono<OrderDTO> createOrder(OrderDTO orderRequest);
+    Mono<ProductDTO> findByProductId(String productId);
 
-	
-	Mono<OrderDTO> transcodeOrder(IncomingOrderDTO incomingOrder);
 
 }

@@ -1,17 +1,10 @@
 package com.application.products.controller.dto;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.io.Serializable;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -21,57 +14,57 @@ import lombok.ToString;
 @Setter
 @ToString
 
-public class OrderDTO {
+public class OrderDTO implements Serializable {
 
-	private OrderStatus orderStatus;
-	private OrderInfo orderInfo;
-	private UserInfo userInfo;
-	private ProductInfo productInfo;
+    private OrderStatus orderStatus;
+    private OrderInfo orderInfo;
+    private UserInfo userInfo;
+    private ProductInfo productInfo;
 
-	@AllArgsConstructor
-	@Getter
-	@NoArgsConstructor
-	@Setter
-	@ToString
-	@Builder(toBuilder = true)
+    public enum OrderStatus {
+        PROCESSING, REFUSED, CREATED
+    }
 
-	public static class OrderInfo {
-		private String orderId;
-		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-		private String orderedAt;
-		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-		private String deliveredAt;
-	}
+    @AllArgsConstructor
+    @Getter
+    @NoArgsConstructor
+    @Setter
+    @ToString
+    @Builder(toBuilder = true)
 
-	@AllArgsConstructor
-	@Getter
-	@NoArgsConstructor
-	@Setter
-	@ToString
-	@Builder(toBuilder = true)
+    public static class OrderInfo implements Serializable {
+        private String orderId;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+        private String orderedAt;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+        private String deliveredAt;
+    }
 
-	public static class UserInfo {
-		private String firstName;
-		private String lastName;
-		private String email;
-	}
+    @AllArgsConstructor
+    @Getter
+    @NoArgsConstructor
+    @Setter
+    @ToString
+    @Builder(toBuilder = true)
 
-	@AllArgsConstructor
-	@Getter
-	@NoArgsConstructor
-	@Setter
-	@ToString
-	@Builder(toBuilder = true)
+    public static class UserInfo implements Serializable {
+        private String firstName;
+        private String lastName;
+        private String email;
+    }
 
-	public static class ProductInfo {
-		private UUID productId;
-		private String productName;
-		private Double price;
-		private Integer quantity;
-		private Boolean isInStock;
-	}
+    @AllArgsConstructor
+    @Getter
+    @NoArgsConstructor
+    @Setter
+    @ToString
+    @Builder(toBuilder = true)
 
-	public enum OrderStatus {
-		PROCESSING, REFUSED, CREATED
-	}
+    public static class ProductInfo implements Serializable {
+        private UUID productId;
+        private String productName;
+        private Double price;
+        private Integer quantity;
+        private Boolean isInStock;
+    }
 }

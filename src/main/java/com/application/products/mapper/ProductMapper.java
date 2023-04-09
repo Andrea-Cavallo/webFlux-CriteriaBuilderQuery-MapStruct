@@ -1,28 +1,31 @@
 package com.application.products.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
-
 import com.application.products.controller.dto.ProductDTO;
 import com.application.products.documents.Product;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface ProductMapper {
 
-	ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
+@Component
+public class ProductMapper {
 
-	@Mappings({ @Mapping(source = "productId", target = "productId"),
-			@Mapping(source = "productName", target = "productName"),
+    public ProductDTO toDTO(Product product) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProductId( product.getProductId() );
+        productDTO.setProductName( product.getProductName() );
+        productDTO.setPrice( product.getPrice() );
+        productDTO.setQuantity( product.getQuantity() );
+        productDTO.setIsInStock( product.getIsInStock() );
+        return productDTO;
+    }
 
-			@Mapping(source = "price", target = "price"), @Mapping(source = "quantity", target = "quantity"),
-			@Mapping(source = "isInStock", target = "isInStock") })
-	ProductDTO toDTO(Product product);
-
-	@Mappings({ @Mapping(source = "productId", target = "productId"),
-			@Mapping(source = "productName", target = "productName"), @Mapping(source = "price", target = "price"),
-			@Mapping(source = "quantity", target = "quantity"), @Mapping(source = "isInStock", target = "isInStock") })
-	Product toEntity(ProductDTO productDTO);
-
+    public Product toEntity(ProductDTO productDTO) {
+        Product product = new Product();
+        product.setProductId( productDTO.getProductId() );
+        product.setProductName( productDTO.getProductName() );
+        product.setPrice( productDTO.getPrice() );
+        product.setQuantity( productDTO.getQuantity() );
+        product.setIsInStock( productDTO.getIsInStock() );
+        return product;
+    }
 }
+

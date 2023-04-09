@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-	private String firstName;
-	private String lastName;
-	private String email;
+public class UserDTO implements Serializable {
+    private String firstName;
+    private String lastName;
+    private String email;
 }
