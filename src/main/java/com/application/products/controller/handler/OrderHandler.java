@@ -26,14 +26,14 @@ public class OrderHandler {
 	private Logger logger = LogManager.getLogger(OrderHandler.class);
 
 	public Mono<ServerResponse> createOrder(ServerRequest request) {
-		logger.info("Order Handler: Received a request to create a new Order {}", Utils.mapToJsonString(request));
+		logger.info("Order Handler: Received a request to create a new Order");
 		return request.body(BodyExtractors.toMono(OrderDTO.class))
 				.flatMap(orderDTO -> orderService.createOrder(orderDTO).flatMap(orderCreated -> ServerResponse.ok()
 						.contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(orderCreated))));
 	}
 
 	public Mono<ServerResponse> transcode(ServerRequest request) {
-		logger.info("Order Handler: Received a request to Transcode a new Order {}", Utils.mapToJsonString(request));
+		logger.info("Order Handler: Received a request to Transcode a new Order ");
 		return request.body(BodyExtractors.toMono(IncomingOrderDTO.class))
 				.flatMap(orderToTranscode -> orderService.transcodeOrder(orderToTranscode)
 						.flatMap(orderTranscode -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)

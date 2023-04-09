@@ -23,6 +23,10 @@ import lombok.ToString;
 
 public class OrderDTO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4944453049040360724L;
 	private OrderStatus orderStatus;
 	private OrderInfo orderInfo;
 	private UserInfo userInfo;
@@ -40,6 +44,10 @@ public class OrderDTO implements Serializable {
 	@Builder(toBuilder = true)
 	@EqualsAndHashCode
 	public static class OrderInfo implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2232307970853341817L;
 		private String orderId;
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
 		private String orderedAt;
@@ -72,6 +80,10 @@ public class OrderDTO implements Serializable {
 	@Builder(toBuilder = true)
 
 	public static class ProductInfo implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6916229809506856199L;
 		private UUID productId;
 		private String productName;
 		private Double price;

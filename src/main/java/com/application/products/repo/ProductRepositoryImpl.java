@@ -3,6 +3,9 @@ package com.application.products.repo;
 import static com.application.products.utils.Constants.PRICE;
 import static com.application.products.utils.Constants.PRODUCT_NAME;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -50,16 +53,20 @@ public class ProductRepositoryImpl implements CustomRepository<Product> {
 	}
 
 	private void buildPriceRangeCriteria(Double minPrice, Double maxPrice, Query query) {
-		if (minPrice != null || maxPrice != null) {
-			Criteria priceRangeCriteria = new Criteria();
-			if (minPrice != null) {
-				priceRangeCriteria.and(PRICE).gte(minPrice);
-			}
-			if (maxPrice != null) {
-				priceRangeCriteria.and(PRICE).lte(maxPrice);
-			}
-			query.addCriteria(priceRangeCriteria);
-		}
+	    if (minPrice != null || maxPrice != null) {
+	        List<Criteria> criteriaList = new ArrayList<>();
+
+	        if (minPrice != null) {
+	            criteriaList.add(Criteria.where(PRICE).gte(minPrice));
+	        }
+	        if (maxPrice != null) {
+	            criteriaList.add(Criteria.where(PRICE).lte(maxPrice));
+	        }
+
+	        Criteria priceRangeCriteria = new Criteria().andOperator(criteriaList.toArray(new Criteria[0]));
+	        query.addCriteria(priceRangeCriteria);
+	    }
 	}
+
 
 }

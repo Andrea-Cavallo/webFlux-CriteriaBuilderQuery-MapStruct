@@ -37,7 +37,7 @@ public class ProductHandler extends CommonHandler {
 		String productName = request.queryParam(Constants.PRODUCT_NAME).orElse(null);
 		Double minPrice = request.queryParam(MIN_PRICE).map(Double::parseDouble).orElse(null);
 		Double maxPrice = request.queryParam(MAX_PRICE).map(Double::parseDouble).orElse(null);
-		logger.info("Product Handler: FindProductsByCriteria product Name is  {} ", Utils.mapToJsonString(productName));
+		logger.info("Product Handler: FindProductsByCriteria product Name is  {} ");
 		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
 				.body(productService.findProductsByCriteria(productName, minPrice, maxPrice), List.class)
 				.switchIfEmpty(buildError());

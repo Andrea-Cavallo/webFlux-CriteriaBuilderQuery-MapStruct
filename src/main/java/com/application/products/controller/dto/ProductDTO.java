@@ -23,6 +23,10 @@ import lombok.ToString;
 
 public class ProductDTO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4233959285371087419L;
 	private String productId;
 	private String productName;
 	private Double price;

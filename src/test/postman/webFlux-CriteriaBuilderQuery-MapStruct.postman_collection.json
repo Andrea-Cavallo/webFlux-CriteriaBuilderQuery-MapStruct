@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "d0c45752-8c6c-44e0-aa5c-419ebcc53aae",
+		"name": "webFlux-CriteriaBuilderQuery-MapStruct",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14299239"
+	},
+	"item": [
+		{
+			"name": "CREA-PRODOTTO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"transactionId\": \"123456\",\n    \"userName\": \"John Doe\",\n    \"orderedAt\": \"2023-03-19 10:30:00\",\n    \"deliveredAt\": \"2023-03-21 14:00:00\",\n    \"price\": 10.0,\n    \"quantity\": 2,\n    \"isInStock\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-PRODOTTO-BY-PRODUCTID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/products/ee01a45e-4bda-4c30-9f71-d50342fad68d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"products",
+						"ee01a45e-4bda-4c30-9f71-d50342fad68d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREA-ORDER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderStatus\": \"PROCESSING\",\n    \"orderInfo\": {\n        \"orderId\": \"927c7b7c-2026-4fa7-907c-f55ac2b7aaa4\",\n        \"orderedAt\": \"2023-04-02T17:25:01.898170\",\n        \"deliveredAt\": \"2023-04-17T17:25:01.898250\"\n    },\n    \"userInfo\": {\n        \"firstName\": \"andrea\",\n        \"lastName\": \"cavallo\",\n        \"email\": \"andrea.cavallo@gmail.com\"\n    },\n    \"productInfo\": {\n        \"productId\": \"b2df28d3-a812-49e7-9bfd-742685572d12\",\n        \"productName\": \"Playstation5\",\n        \"price\": 600.0,\n        \"quantity\": 10,\n        \"isInStock\": true\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-PRODUCTS-CRITERIA",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders?userName=AndreaCavallo&minPrice=10.0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "AndreaCavallo"
+						},
+						{
+							"key": "minPrice",
+							"value": "10.0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TRANSCODE-ORDER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderStatus\": \"PROCESSING\",\n    \"userRequest\": {\n        \"firstName\": \"Andrea\",\n        \"lastName\": \"Cavallo\",\n        \"quantity\": 1,\n        \"productName\": \"SuperNintendo\"\n    },\n    \"productRequest\": {\n        \"productId\": \"ac8ef6aa-02a8-4d0b-aeaf-14a073653e84\",\n        \"productName\": \"SuperNintendo\",\n        \"price\": 499.99,\n        \"quantity\": 10,\n        \"isInStock\": true\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/transcoding",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"transcoding"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

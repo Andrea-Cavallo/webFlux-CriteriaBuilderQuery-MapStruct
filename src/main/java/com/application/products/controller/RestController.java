@@ -31,7 +31,6 @@ public class RestController {
 				.POST(PRODUCTS, productHandler::createProduct)
 				.POST(ORDERS, orderHandler::createOrder)
 				.POST(TRANSCODING, orderHandler::transcode)
-
 				.build();
 	}
 
