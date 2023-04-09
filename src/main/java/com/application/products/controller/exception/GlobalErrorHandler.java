@@ -29,10 +29,4 @@ public class GlobalErrorHandler {
 		return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error));
 	}
 
-	@ExceptionHandler(ProductNotFoundException.class)
-	public Mono<ResponseEntity<String>> handleOrderNotFoundException(ProductNotFoundException ex) {
-		LOGGER.error("Exception Caught in OrderNotFoundException: {}", ex.getMessage(), ex);
-		return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()));
-	}
-
 }

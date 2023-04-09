@@ -1,4 +1,4 @@
-package com.application.products.documents;
+package com.application.products.models;
 
 import java.io.Serializable;
 

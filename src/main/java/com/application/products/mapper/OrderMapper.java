@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.application.products.controller.dto.IncomingOrderDTO;
 import com.application.products.controller.dto.OrderDTO;
-import com.application.products.documents.Order;
+import com.application.products.models.Order;
 
 @Component
 public class OrderMapper {
@@ -62,7 +62,7 @@ public class OrderMapper {
 
 	public OrderDTO.ProductInfo buildProductInfo(IncomingOrderDTO.ProductRequest productRequest) {
 
-		return OrderDTO.ProductInfo.builder().productId(UUID.fromString(productRequest.getProductId()))
+		return OrderDTO.ProductInfo.builder().productId((productRequest.getProductId()))
 				.productName(productRequest.getProductName()).price(productRequest.getPrice())
 				.quantity(productRequest.getQuantity()).isInStock(productRequest.getIsInStock()).build();
 	}

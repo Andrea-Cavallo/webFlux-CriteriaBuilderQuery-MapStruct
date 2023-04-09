@@ -3,7 +3,7 @@ package com.application.products.mapper;
 import org.springframework.stereotype.Component;
 
 import com.application.products.controller.dto.ProductDTO;
-import com.application.products.documents.Product;
+import com.application.products.models.Product;
 
 @Component
 public class ProductMapper {

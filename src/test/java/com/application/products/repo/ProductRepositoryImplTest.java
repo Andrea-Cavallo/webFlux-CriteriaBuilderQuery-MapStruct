@@ -15,12 +15,12 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.application.products.documents.Product;
+import com.application.products.models.Product;
 
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
- class ProductRepositoryImplTest {
+class ProductRepositoryImplTest {
 
 	@Mock
 	private ReactiveMongoTemplate reactiveMongoTemplate;

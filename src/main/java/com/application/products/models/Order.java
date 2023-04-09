@@ -1,4 +1,4 @@
-package com.application.products.documents;
+package com.application.products.models;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -75,12 +75,12 @@ public class Order implements Serializable {
 	@Setter
 	@ToString
 	@Builder
-	public static class ProductInfo implements Serializable  {
+	public static class ProductInfo implements Serializable {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -9116536928215081032L;
-		private UUID productId;
+		private String productId;
 		private String productName;
 		private Double price;
 		private Integer quantity;

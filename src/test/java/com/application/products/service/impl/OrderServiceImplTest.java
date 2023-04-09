@@ -14,8 +14,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.application.products.controller.dto.IncomingOrderDTO;
 import com.application.products.controller.dto.OrderDTO;
-import com.application.products.documents.Order;
 import com.application.products.mapper.OrderMapper;
+import com.application.products.models.Order;
 import com.application.products.repo.CustomRepository;
 
 import reactor.core.publisher.Mono;
@@ -43,7 +43,7 @@ class OrderServiceImplTest {
 						.orderedAt(LocalDateTime.now().toString()).build())
 				.userInfo(OrderDTO.UserInfo.builder().firstName("John").lastName("Doe").email("john.doe@example.com")
 						.build())
-				.productInfo(OrderDTO.ProductInfo.builder().productId(UUID.randomUUID()).productName("Product 1")
+				.productInfo(OrderDTO.ProductInfo.builder().productId(UUID.randomUUID().toString()).productName("Product 1")
 						.price(100.0).quantity(1).isInStock(true).build())
 				.build();
 
@@ -52,7 +52,7 @@ class OrderServiceImplTest {
 						.orderedAt(LocalDateTime.now().toString()).build())
 				.userInfo(Order.UserInfo.builder().firstName("John").lastName("Doe").email("john.doe@example.com")
 						.build())
-				.productInfo(Order.ProductInfo.builder().productId(UUID.randomUUID()).productName("Product 1")
+				.productInfo(Order.ProductInfo.builder().productId(UUID.randomUUID().toString()).productName("Product 1")
 						.price(100.0).quantity(1).isInStock(true).build())
 				.build();
 
@@ -81,7 +81,7 @@ class OrderServiceImplTest {
 		OrderDTO.UserInfo userInfo = OrderDTO.UserInfo.builder().firstName("John").lastName("Doe")
 				.email("john.doe@example.com").build();
 
-		OrderDTO.ProductInfo productInfo = OrderDTO.ProductInfo.builder().productId(UUID.randomUUID())
+		OrderDTO.ProductInfo productInfo = OrderDTO.ProductInfo.builder().productId(UUID.randomUUID().toString())
 				.productName("Product 1").price(100.0).build();
 
 		OrderDTO expectedOrderDTO = OrderDTO.builder().orderStatus(OrderDTO.OrderStatus.PROCESSING).orderInfo(orderInfo)

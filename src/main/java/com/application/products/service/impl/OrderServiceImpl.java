@@ -1,7 +1,5 @@
 package com.application.products.service.impl;
 
-import static com.application.products.utils.Constants.PRODUCT_NOT_FOUND;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -11,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.application.products.controller.dto.IncomingOrderDTO;
 import com.application.products.controller.dto.OrderDTO;
 import com.application.products.controller.exception.ProductNotFoundException;
-import com.application.products.documents.Order;
 import com.application.products.mapper.OrderMapper;
+import com.application.products.models.Order;
 import com.application.products.repo.CustomRepository;
 import com.application.products.service.OrderService;
 import com.application.products.utils.Utils;
@@ -90,6 +88,6 @@ public class OrderServiceImpl implements OrderService {
 	public Mono<Void> deleteByOrderId(String orderId) {
 		logger.info("In product service Order to delete has id: {}", orderId);
 		return orderRepositoryImpl.findByName(orderId).flatMap(product -> orderRepositoryImpl.deleteById(orderId))
-				.switchIfEmpty(Mono.error(new ProductNotFoundException(PRODUCT_NOT_FOUND)));
+				.switchIfEmpty(Mono.error(new ProductNotFoundException(orderId)));
 	}
 }

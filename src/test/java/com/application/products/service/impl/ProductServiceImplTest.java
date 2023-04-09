@@ -18,8 +18,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.application.products.controller.dto.ProductDTO;
 import com.application.products.controller.exception.ProductNotFoundException;
-import com.application.products.documents.Product;
 import com.application.products.mapper.ProductMapper;
+import com.application.products.models.Product;
 import com.application.products.repo.CustomRepository;
 
 import reactor.core.publisher.Flux;

@@ -22,7 +22,7 @@ public final class Utils {
 	 * 
 	 * @throws RuntimeException if there is an error converting the object to JSON
 	 */
-	public static String mapToJsonString(Object object)  {
+	public static String mapToJsonString(Object object) {
 		if (object == null) {
 			return "";
 		}

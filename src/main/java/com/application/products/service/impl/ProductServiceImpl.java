@@ -1,7 +1,6 @@
 package com.application.products.service.impl;
 
 import static com.application.products.utils.Constants.LOG_INFO_SERVICE;
-import static com.application.products.utils.Constants.PRODUCT_NOT_FOUND;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.application.products.controller.dto.ProductDTO;
 import com.application.products.controller.exception.ProductNotFoundException;
-import com.application.products.documents.Product;
 import com.application.products.mapper.ProductMapper;
+import com.application.products.models.Product;
 import com.application.products.repo.CustomRepository;
 import com.application.products.service.ProductService;
 
@@ -50,8 +49,7 @@ public class ProductServiceImpl implements ProductService {
 	public Mono<List<ProductDTO>> findProductsByCriteria(String productName, Double minPrice, Double maxPrice) {
 		logger.info(LOG_INFO_SERVICE, productName, minPrice, maxPrice);
 		return productRepositoryImpl.findByCriteria(productName, minPrice, maxPrice).map(productMapper::toDTO)
-				.collectList().switchIfEmpty(Mono.error(new ProductNotFoundException(PRODUCT_NOT_FOUND)))
-				.doOnError(e -> logger.error("Error in findProductsByCriteria: {}", e.getMessage()));
+				.collectList().switchIfEmpty(Mono.error(new ProductNotFoundException(productName)));
 	}
 
 	/**
@@ -89,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 	public Mono<ProductDTO> findByProductId(String productId) {
 		logger.info("In product service product id is {}", productId);
 		return productRepositoryImpl.findByName(productId).map(productMapper::toDTO)
-				.switchIfEmpty(Mono.error(new ProductNotFoundException(PRODUCT_NOT_FOUND)));
+				.switchIfEmpty(Mono.error(new ProductNotFoundException(productId)));
 	}
 
 	/**
@@ -106,9 +104,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public Mono<Void> deleteByProductId(String productId) {
 		logger.info("In product service product to delete has id: {}", productId);
-		return productRepositoryImpl.findByName(productId)
-				.flatMap(product -> productRepositoryImpl.deleteById(productId))
-				.switchIfEmpty(Mono.error(new ProductNotFoundException(PRODUCT_NOT_FOUND)));
+		return productRepositoryImpl.deleteById(productId);
 	}
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import com.application.products.controller.dto.ProductDTO;
+import com.application.products.controller.exception.NotFoundException;
 import com.application.products.service.ProductService;
 import com.application.products.utils.Constants;
 
@@ -50,7 +51,10 @@ public class ProductHandler extends CommonHandler {
 		logger.info("Product Handler: FindProductsByCriteria product Name is  {} ", productName);
 		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
 				.body(productService.findProductsByCriteria(productName, minPrice, maxPrice), List.class)
-				.switchIfEmpty(buildError());
+				.onErrorResume(NotFoundException.class, this::onServiceValidationError)
+
+				.onErrorResume(Exception.class, this::onGenericError);
+
 	}
 
 	/**
@@ -66,7 +70,11 @@ public class ProductHandler extends CommonHandler {
 	public Mono<ServerResponse> handleCreate(ServerRequest request) {
 		return request.body(BodyExtractors.toMono(ProductDTO.class))
 				.flatMap(prodDTO -> productService.createProduct(prodDTO).flatMap(productCreated -> ServerResponse.ok()
-						.contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(productCreated))));
+						.contentType(MediaType.APPLICATION_JSON)
+						.body(BodyInserters.fromValue(productCreated))))
+				.onErrorResume(Exception.class, this::onGenericError);
+
+			
 	}
 
 	/**
@@ -82,9 +90,12 @@ public class ProductHandler extends CommonHandler {
 	public Mono<ServerResponse> handleGetById(ServerRequest request) {
 		String productId = request.pathVariable("productId");
 		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-				.body(productService.findByProductId(productId), ProductDTO.class).switchIfEmpty(buildError());
-	}
-	
+				.body(productService.findByProductId(productId), ProductDTO.class)
+				.onErrorResume(NotFoundException.class, this::onServiceValidationError)
+
+				.onErrorResume(Exception.class, this::onGenericError);
+		}
+
 	/**
 	 * 
 	 * Handles a DELETE request to delete an Product by ID.
@@ -100,8 +111,11 @@ public class ProductHandler extends CommonHandler {
 		String productId = request.pathVariable("productId");
 		logger.info("Order Handler: Received a request to delete a product");
 
-		return request.body(BodyExtractors.toMono(Void.class)).flatMap(noBody -> productService.deleteByProductId(productId))
-				.then(ServerResponse.noContent().build());
+		return productService.deleteByProductId(productId).flatMap(result -> ServerResponse.noContent().build())
+				.onErrorResume(NotFoundException.class, this::onServiceValidationError)
+
+				.onErrorResume(Exception.class, this::onGenericError);
+
 	}
 
 }

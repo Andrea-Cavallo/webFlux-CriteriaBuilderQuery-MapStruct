@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.application.products.controller.dto.IncomingOrderDTO;
 import com.application.products.controller.dto.OrderDTO;
-import com.application.products.documents.Order;
+import com.application.products.models.Order;
 
 class OrderMapperTest {
 
@@ -36,7 +36,7 @@ class OrderMapperTest {
 		order.setUserInfo(userInfo);
 
 		Order.ProductInfo productInfo = new Order.ProductInfo();
-		productInfo.setProductId(UUID.randomUUID());
+		productInfo.setProductId(UUID.randomUUID().toString());
 		productInfo.setProductName("Product 1");
 		productInfo.setPrice(10.0);
 		productInfo.setQuantity(5);
@@ -81,7 +81,7 @@ class OrderMapperTest {
 		orderDTO.setUserInfo(userInfo);
 
 		OrderDTO.ProductInfo productInfo = new OrderDTO.ProductInfo();
-		productInfo.setProductId(UUID.randomUUID());
+		productInfo.setProductId(UUID.randomUUID().toString());
 		productInfo.setProductName("Product 1");
 		productInfo.setPrice(10.0);
 		productInfo.setQuantity(5);
@@ -165,7 +165,7 @@ class OrderMapperTest {
 		OrderDTO.ProductInfo productInfo = orderMapper.buildProductInfo(productRequest);
 
 		// THEN the product info should have the correct values
-		assertEquals(UUID.fromString(productRequest.getProductId()), productInfo.getProductId());
+		assertEquals((productRequest.getProductId()), productInfo.getProductId());
 
 	}
 

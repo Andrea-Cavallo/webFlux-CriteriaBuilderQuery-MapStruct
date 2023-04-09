@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.application.products.controller.dto.ProductDTO;
-import com.application.products.documents.Product;
+import com.application.products.models.Product;
 
 public class ProductMapperTest {
 

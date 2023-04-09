@@ -6,19 +6,22 @@ import static com.application.products.utils.Constants.PRODUCT_NAME;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.application.products.documents.Product;
+import com.application.products.models.Product;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
 public class ProductRepositoryImpl implements CustomRepository<Product> {
+	private Logger logger = LogManager.getLogger(ProductRepositoryImpl.class);
 
 	private final ReactiveMongoTemplate reactiveMongoTemplate;
 
@@ -44,13 +47,16 @@ public class ProductRepositoryImpl implements CustomRepository<Product> {
 	 */
 	@Override
 	public Flux<Product> findByCriteria(String productName, Double minPrice, Double maxPrice) {
-		// Create a new query object and add criteria for the product name and price range
+		// Create a new query object and add criteria for the product name and price
+		// range
 		Query query = new Query();
 		buildProductNameCriteria(productName, query);
 		buildPriceRangeCriteria(minPrice, maxPrice, query);
-		// Find products in the database matching the query criteria and return a Flux of Product objects
+		// Find products in the database matching the query criteria and return a Flux
+		// of Product objects
 		return reactiveMongoTemplate.find(query, Product.class);
 	}
+
 	@Override
 	public Mono<Product> save(Product orderRequest) {
 		return reactiveMongoTemplate.save(orderRequest);
@@ -61,10 +67,6 @@ public class ProductRepositoryImpl implements CustomRepository<Product> {
 		Query query = Query.query(Criteria.where("productId").is(productId));
 		return reactiveMongoTemplate.findOne(query, Product.class);
 	}
-	
-	
-	
-
 
 	private void buildProductNameCriteria(String productName, Query query) {
 		if (productName != null) {
@@ -88,9 +90,11 @@ public class ProductRepositoryImpl implements CustomRepository<Product> {
 		}
 	}
 
-	@Override
 	public Mono<Void> deleteById(String productId) {
 		Query query = Query.query(Criteria.where("productId").is(productId));
-		return reactiveMongoTemplate.remove(query, Product.class).then();
+		return reactiveMongoTemplate.remove(query, Product.class).doOnSuccess(deleteResult -> {
+			logger.info("Deleted product with ID {}", productId);
+		}).then();
 	}
+
 }

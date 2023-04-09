@@ -36,24 +36,21 @@ public class RouterController {
 		// Define the routes for handling HTTP requests
 
 		return RouterFunctions.route()
-				
-				//products
+
+				// products
 				.POST(PRODUCTS, productHandler::handleCreate)
 				.GET(PRODUCTS, productHandler::handleFetchProductsByNameOrByPrice)
 				.GET(PRODUCTS_PRODUCT_ID, productHandler::handleGetById)
 				.DELETE(PRODUCTS_PRODUCT_ID, productHandler::handleDelete)
-				
-				//orders		
-				.POST(TRANSCODING, orderHandler::handleTranscode)
-				.POST(ORDERS, orderHandler::handleCreate)
-				.DELETE(ORDERS_ORDER_ID,orderHandler::handleDelete)			
-				.build();
+
+				// orders
+				.POST(TRANSCODING, orderHandler::handleTranscode).POST(ORDERS, orderHandler::handleCreate)
+				.DELETE(ORDERS_ORDER_ID, orderHandler::handleDelete).build();
 	}
-	
-	//TODO: update needs to be implemented - find by OrderId to 
-	//TODO: add CircuitBreaker 
-	//TODO: add more junits test case
-	//TODO: add a validation of the incoming requests
-	
+
+	// TODO: update needs to be implemented - find by OrderId to
+	// TODO: add CircuitBreaker
+	// TODO: add more junits test case
+	// TODO: add a validation of the incoming requests
 
 }

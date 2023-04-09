@@ -84,7 +84,7 @@ public class OrderDTO implements Dto {
 		 * 
 		 */
 		private static final long serialVersionUID = -6916229809506856199L;
-		private UUID productId;
+		private String productId;
 		private String productName;
 		private Double price;
 		private Integer quantity;

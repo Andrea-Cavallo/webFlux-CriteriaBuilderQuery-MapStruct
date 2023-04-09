@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
-public class OrderHandler {
+public class OrderHandler extends CommonHandler {
 
 	private final OrderService orderService;
 
@@ -40,7 +40,8 @@ public class OrderHandler {
 		logger.info("Order Handler: Received a request to create a new Order");
 		return request.body(BodyExtractors.toMono(OrderDTO.class))
 				.flatMap(orderDTO -> orderService.createOrder(orderDTO).flatMap(orderCreated -> ServerResponse.ok()
-						.contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(orderCreated))));
+						.contentType(MediaType.APPLICATION_JSON)
+						.body(BodyInserters.fromValue(orderCreated))));
 	}
 
 	/**
@@ -78,7 +79,8 @@ public class OrderHandler {
 		String orderId = request.pathVariable("orderId");
 		logger.info("Order Handler: Received a request to delete an Order");
 
-		return request.body(BodyExtractors.toMono(Void.class)).flatMap(noBody -> orderService.deleteByOrderId(orderId))
-				.then(ServerResponse.noContent().build());
+		return orderService.deleteByOrderId(orderId).then(ServerResponse.noContent().build())
+				.onErrorResume(Exception.class, this::onGenericError);
 	}
+
 }
