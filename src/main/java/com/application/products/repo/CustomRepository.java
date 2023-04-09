@@ -5,9 +5,9 @@ import reactor.core.publisher.Mono;
 
 public interface CustomRepository<T> {
 
-    Flux<T> findByCriteria(String documentName, Double minPrice, Double maxPrice);
+	Flux<T> findByCriteria(String documentName, Double minPrice, Double maxPrice);
 
-    Mono<T> save(T document);
+	Mono<T> save(T document);
 
-    Mono<T> findByName(String documentName);
+	Mono<T> findByName(String documentName);
 }
