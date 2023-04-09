@@ -42,7 +42,7 @@ public class ProductHandler extends CommonHandler {
 	 * @author Andrea-Cavallo
 	 * @link https://medium.com/@andreacavallo
 	 */
-	public Mono<ServerResponse> handleCriteria(ServerRequest request) {
+	public Mono<ServerResponse> handleFetchProductsByNameOrByPrice(ServerRequest request) {
 
 		String productName = request.queryParam(Constants.PRODUCT_NAME).orElse(null);
 		Double minPrice = request.queryParam(MIN_PRICE).map(Double::parseDouble).orElse(null);
@@ -83,6 +83,25 @@ public class ProductHandler extends CommonHandler {
 		String productId = request.pathVariable("productId");
 		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
 				.body(productService.findByProductId(productId), ProductDTO.class).switchIfEmpty(buildError());
+	}
+	
+	/**
+	 * 
+	 * Handles a DELETE request to delete an Product by ID.
+	 * 
+	 * @param request the incoming HTTP request
+	 * 
+	 * @return a Mono that emits the HTTP response to the client
+	 * @author Andrea-Cavallo
+	 * @link https://medium.com/@andreacavallo
+	 * 
+	 */
+	public Mono<ServerResponse> handleDelete(ServerRequest request) {
+		String productId = request.pathVariable("productId");
+		logger.info("Order Handler: Received a request to delete a product");
+
+		return request.body(BodyExtractors.toMono(Void.class)).flatMap(noBody -> productService.deleteByProductId(productId))
+				.then(ServerResponse.noContent().build());
 	}
 
 }

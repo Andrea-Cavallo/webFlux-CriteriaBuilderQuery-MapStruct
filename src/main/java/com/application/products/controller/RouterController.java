@@ -1,6 +1,7 @@
 package com.application.products.controller;
 
 import static com.application.products.utils.Constants.ORDERS;
+import static com.application.products.utils.Constants.ORDERS_ORDER_ID;
 import static com.application.products.utils.Constants.PRODUCTS;
 import static com.application.products.utils.Constants.PRODUCTS_PRODUCT_ID;
 import static com.application.products.utils.Constants.TRANSCODING;
@@ -18,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
-public class RestController {
+public class RouterController {
 
 	private final ProductHandler productHandler;
 	private final OrderHandler orderHandler;
@@ -35,12 +36,24 @@ public class RestController {
 		// Define the routes for handling HTTP requests
 
 		return RouterFunctions.route()
-				.GET(PRODUCTS, productHandler::handleCriteria)
-				.GET(PRODUCTS_PRODUCT_ID, productHandler::handleGetById)
+				
+				//products
 				.POST(PRODUCTS, productHandler::handleCreate)
-				.POST(ORDERS, orderHandler::handleCreate)
+				.GET(PRODUCTS, productHandler::handleFetchProductsByNameOrByPrice)
+				.GET(PRODUCTS_PRODUCT_ID, productHandler::handleGetById)
+				.DELETE(PRODUCTS_PRODUCT_ID, productHandler::handleDelete)
+				
+				//orders		
 				.POST(TRANSCODING, orderHandler::handleTranscode)
+				.POST(ORDERS, orderHandler::handleCreate)
+				.DELETE(ORDERS_ORDER_ID,orderHandler::handleDelete)			
 				.build();
 	}
+	
+	//TODO: update needs to be implemented - find by OrderId to 
+	//TODO: add CircuitBreaker 
+	//TODO: add more junits test case
+	//TODO: add a validation of the incoming requests
+	
 
 }

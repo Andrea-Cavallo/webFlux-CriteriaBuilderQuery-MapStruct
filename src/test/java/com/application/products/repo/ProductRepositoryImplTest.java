@@ -20,7 +20,7 @@ import com.application.products.documents.Product;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-public class ProductRepositoryImplTest {
+ class ProductRepositoryImplTest {
 
 	@Mock
 	private ReactiveMongoTemplate reactiveMongoTemplate;

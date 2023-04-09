@@ -24,8 +24,8 @@ import com.application.products.controller.handler.ProductHandler;
 import reactor.core.publisher.Mono;
 
 @RunWith(SpringRunner.class)
-@WebFluxTest(RestController.class)
-class RestControllerTest {
+@WebFluxTest(RouterController.class)
+class RouterControllerTest {
 
 	@Autowired
 	private WebTestClient webTestClient;
