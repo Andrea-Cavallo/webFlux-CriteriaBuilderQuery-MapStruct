@@ -36,4 +36,10 @@ public class OrderRepositoryImpl implements CustomRepository<Order> {
 		Query query = Query.query(Criteria.where("name").is(documentName));
 		return reactiveMongoTemplate.findOne(query, Order.class);
 	}
+
+	@Override
+	public Mono<Void> deleteById(String orderId) {
+		Query query = Query.query(Criteria.where("orderId").is(orderId));
+		return reactiveMongoTemplate.remove(query, Order.class).then();
+	}
 }

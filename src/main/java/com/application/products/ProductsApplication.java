@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({ "com.application.products.*" })
-
 public class ProductsApplication {
 
 	public static void main(String[] args) {

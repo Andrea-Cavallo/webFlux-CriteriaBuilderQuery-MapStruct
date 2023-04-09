@@ -21,12 +21,12 @@ import lombok.ToString;
 @Setter
 @ToString
 
-public class OrderDTO implements Serializable {
+public class OrderDTO implements Dto {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4944453049040360724L;
+	private static final long serialVersionUID = 7998197139881654526L;
 	private OrderStatus orderStatus;
 	private OrderInfo orderInfo;
 	private UserInfo userInfo;
@@ -43,7 +43,7 @@ public class OrderDTO implements Serializable {
 	@ToString
 	@Builder(toBuilder = true)
 	@EqualsAndHashCode
-	public static class OrderInfo implements Serializable {
+	public static class OrderInfo implements Dto {
 		/**
 		 * 
 		 */
@@ -62,7 +62,7 @@ public class OrderDTO implements Serializable {
 	@ToString
 	@Builder(toBuilder = true)
 	@EqualsAndHashCode
-	public static class UserInfo implements Serializable {
+	public static class UserInfo implements Dto {
 		/**
 		 * 
 		 */

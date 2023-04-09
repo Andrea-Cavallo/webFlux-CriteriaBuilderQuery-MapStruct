@@ -8,9 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.ReactiveMongoDatabaseFactory;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mongodb.ConnectionString;
 
 @Configuration
@@ -32,5 +30,4 @@ public class MongoDbConfigLocal {
 		return reactiveMongoTemplate;
 	}
 
-	
 }

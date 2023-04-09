@@ -22,6 +22,10 @@ import lombok.ToString;
 @Document(collection = "order")
 public class Order implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6709550997374600901L;
 	private OrderStatus orderStatus;
 	private OrderInfo orderInfo;
 	private UserInfo userInfo;
@@ -37,7 +41,11 @@ public class Order implements Serializable {
 	@Setter
 	@ToString
 	@Builder
-	public static class OrderInfo {
+	public static class OrderInfo implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6469121778061108633L;
 		private String orderId;
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
 		private String orderedAt;
@@ -51,7 +59,11 @@ public class Order implements Serializable {
 	@Setter
 	@ToString
 	@Builder
-	public static class UserInfo {
+	public static class UserInfo implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2724763420962848612L;
 		private String firstName;
 		private String lastName;
 		private String email;
@@ -63,7 +75,11 @@ public class Order implements Serializable {
 	@Setter
 	@ToString
 	@Builder
-	public static class ProductInfo {
+	public static class ProductInfo implements Serializable  {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -9116536928215081032L;
 		private UUID productId;
 		private String productName;
 		private Double price;

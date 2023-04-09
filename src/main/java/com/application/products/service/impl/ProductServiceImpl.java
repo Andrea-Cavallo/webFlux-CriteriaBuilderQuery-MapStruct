@@ -24,7 +24,6 @@ import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-
 public class ProductServiceImpl implements ProductService {
 
 	private final ProductMapper productMapper;
@@ -32,6 +31,21 @@ public class ProductServiceImpl implements ProductService {
 
 	private Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
+	/**
+	 * 
+	 * Finds a list of products based on the provided search criteria.
+	 * 
+	 * @param productName the name of the product to search for
+	 * 
+	 * @param minPrice    the minimum price of the products to search for
+	 * 
+	 * @param maxPrice    the maximum price of the products to search for
+	 * 
+	 * @return a Mono that emits the list of matching ProductDTOs
+	 * 
+	 * @throws ProductNotFoundException if no products are found matching the search
+	 *                                  criteria
+	 */
 	@Override
 	public Mono<List<ProductDTO>> findProductsByCriteria(String productName, Double minPrice, Double maxPrice) {
 		logger.info(LOG_INFO_SERVICE, productName, minPrice, maxPrice);
@@ -40,8 +54,18 @@ public class ProductServiceImpl implements ProductService {
 				.doOnError(e -> logger.error("Error in findProductsByCriteria: {}", e.getMessage()));
 	}
 
+	/**
+	 * 
+	 * Creates a new product based on the provided ProductDTO.
+	 * 
+	 * @param productRequest the ProductDTO containing the details of the new
+	 *                       product
+	 * 
+	 * @return a Mono that emits the created ProductDTO
+	 */
+
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public Mono<ProductDTO> createProduct(ProductDTO productRequest) {
 
 		String uuid = UUID.randomUUID().toString();
@@ -51,10 +75,39 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
+	/**
+	 * 
+	 * Finds a product by its ID.
+	 * 
+	 * @param productId the ID of the product to find
+	 * 
+	 * @return a Mono that emits the matching ProductDTO
+	 * 
+	 * @throws ProductNotFoundException if no product is found with the given ID
+	 */
 	@Override
 	public Mono<ProductDTO> findByProductId(String productId) {
 		logger.info("In product service product id is {}", productId);
 		return productRepositoryImpl.findByName(productId).map(productMapper::toDTO)
+				.switchIfEmpty(Mono.error(new ProductNotFoundException(PRODUCT_NOT_FOUND)));
+	}
+
+	/**
+	 * 
+	 * Deletes a product with the given ID.
+	 * 
+	 * @param productId the ID of the product to delete
+	 * 
+	 * @return a Mono that completes when the product is deleted
+	 * 
+	 * @throws ProductNotFoundException if no product is found with the given ID
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Mono<Void> deleteByProductId(String productId) {
+		logger.info("In product service product to delete has id: {}", productId);
+		return productRepositoryImpl.findByName(productId)
+				.flatMap(product -> productRepositoryImpl.deleteById(productId))
 				.switchIfEmpty(Mono.error(new ProductNotFoundException(PRODUCT_NOT_FOUND)));
 	}
 

@@ -10,4 +10,5 @@ public interface OrderService {
 
 	Mono<OrderDTO> transcodeOrder(IncomingOrderDTO incomingOrder);
 
+	Mono<Void> deleteByOrderId(String orderId);
 }

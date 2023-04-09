@@ -40,7 +40,7 @@ class RestControllerTest {
 	void testCreateOrder() {
 		OrderDTO orderDTO = new OrderDTO();
 		OrderDTO expectedResponse = new OrderDTO();
-		when(orderHandler.createOrder(any(ServerRequest.class)))
+		when(orderHandler.handleCreate(any(ServerRequest.class)))
 				.thenReturn(Mono.just(orderDTO).flatMap(order -> ServerResponse.ok().bodyValue(order)));
 
 		webTestClient.post().uri("/orders").contentType(MediaType.APPLICATION_JSON).bodyValue(orderDTO).exchange()
@@ -54,7 +54,7 @@ class RestControllerTest {
 		OrderDTO orderDTO = new OrderDTO();
 		OrderDTO expectedResponse = new OrderDTO();
 
-		when(orderHandler.transcode(any(ServerRequest.class)))
+		when(orderHandler.handleTranscode(any(ServerRequest.class)))
 				.thenReturn(Mono.just(orderDTO).flatMap(order -> ServerResponse.ok().bodyValue(order)));
 		webTestClient.post().uri("/transcoding").contentType(MediaType.APPLICATION_JSON).bodyValue(incomingOrderDTO)
 				.exchange().expectStatus().isOk().expectBody(OrderDTO.class).isEqualTo(expectedResponse);

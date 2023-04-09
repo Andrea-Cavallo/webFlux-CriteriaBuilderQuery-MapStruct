@@ -27,15 +27,31 @@ public class ProductRepositoryImpl implements CustomRepository<Product> {
 		this.reactiveMongoTemplate = reactiveMongoTemplate;
 	}
 
+	/**
+	 * 
+	 * Finds products matching the given criteria.
+	 * 
+	 * @param productName the name of the product to search for, or null if not
+	 *                    searching by product name
+	 * 
+	 * @param minPrice    the minimum price of the products to search for, or null
+	 *                    if not searching by price
+	 * 
+	 * @param maxPrice    the maximum price of the products to search for, or null
+	 *                    if not searching by price
+	 * 
+	 * @return a Flux of Product objects matching the given criteria
+	 */
 	@Override
 	public Flux<Product> findByCriteria(String productName, Double minPrice, Double maxPrice) {
+		// Create a new query object and add criteria for the product name and price range
 		Query query = new Query();
 		buildProductNameCriteria(productName, query);
 		buildPriceRangeCriteria(minPrice, maxPrice, query);
-
+		// Find products in the database matching the query criteria and return a Flux of Product objects
 		return reactiveMongoTemplate.find(query, Product.class);
 	}
-
+	@Override
 	public Mono<Product> save(Product orderRequest) {
 		return reactiveMongoTemplate.save(orderRequest);
 	}
@@ -45,6 +61,10 @@ public class ProductRepositoryImpl implements CustomRepository<Product> {
 		Query query = Query.query(Criteria.where("productId").is(productId));
 		return reactiveMongoTemplate.findOne(query, Product.class);
 	}
+	
+	
+	
+
 
 	private void buildProductNameCriteria(String productName, Query query) {
 		if (productName != null) {
@@ -53,20 +73,24 @@ public class ProductRepositoryImpl implements CustomRepository<Product> {
 	}
 
 	private void buildPriceRangeCriteria(Double minPrice, Double maxPrice, Query query) {
-	    if (minPrice != null || maxPrice != null) {
-	        List<Criteria> criteriaList = new ArrayList<>();
+		if (minPrice != null || maxPrice != null) {
+			List<Criteria> criteriaList = new ArrayList<>();
 
-	        if (minPrice != null) {
-	            criteriaList.add(Criteria.where(PRICE).gte(minPrice));
-	        }
-	        if (maxPrice != null) {
-	            criteriaList.add(Criteria.where(PRICE).lte(maxPrice));
-	        }
+			if (minPrice != null) {
+				criteriaList.add(Criteria.where(PRICE).gte(minPrice));
+			}
+			if (maxPrice != null) {
+				criteriaList.add(Criteria.where(PRICE).lte(maxPrice));
+			}
 
-	        Criteria priceRangeCriteria = new Criteria().andOperator(criteriaList.toArray(new Criteria[0]));
-	        query.addCriteria(priceRangeCriteria);
-	    }
+			Criteria priceRangeCriteria = new Criteria().andOperator(criteriaList.toArray(new Criteria[0]));
+			query.addCriteria(priceRangeCriteria);
+		}
 	}
 
-
+	@Override
+	public Mono<Void> deleteById(String productId) {
+		Query query = Query.query(Criteria.where("productId").is(productId));
+		return reactiveMongoTemplate.remove(query, Product.class).then();
+	}
 }

@@ -22,46 +22,42 @@ import reactor.test.StepVerifier;
 
 public class ProductRepositoryImplTest {
 
-    @Mock
-    private ReactiveMongoTemplate reactiveMongoTemplate;
+	@Mock
+	private ReactiveMongoTemplate reactiveMongoTemplate;
 
-    private ProductRepositoryImpl productRepository;
+	private ProductRepositoryImpl productRepository;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        productRepository = new ProductRepositoryImpl(reactiveMongoTemplate);
-    }
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+		productRepository = new ProductRepositoryImpl(reactiveMongoTemplate);
+	}
 
-    @Test
-     void testFindByCriteria() {
-        // Given
-        Query expectedQuery = new Query();
-        expectedQuery.addCriteria(Criteria.where("productName").regex("^.*test.*$", "i"));
-        expectedQuery.addCriteria(Criteria.where("price").gte(null).lte(null));
-        Product product1 = Product.builder().productName("Product").build();
+	@Test
+	void testFindByCriteria() {
+		// Given
+		Query expectedQuery = new Query();
+		expectedQuery.addCriteria(Criteria.where("productName").regex("^.*test.*$", "i"));
+		expectedQuery.addCriteria(Criteria.where("price").gte(null).lte(null));
+		Product product1 = Product.builder().productName("Product").build();
 
-        // Mock ReactiveMongoOperations
-        ReactiveMongoTemplate mockOperations = mock(ReactiveMongoTemplate.class);
-        when(mockOperations.find(any(Query.class), Mockito.eq(Product.class))).thenReturn(Flux.just(product1));
+		// Mock ReactiveMongoOperations
+		ReactiveMongoTemplate mockOperations = mock(ReactiveMongoTemplate.class);
+		when(mockOperations.find(any(Query.class), Mockito.eq(Product.class))).thenReturn(Flux.just(product1));
 
-        // Use the mockOperations instance to create the ProductRepositoryImpl
-        productRepository = new ProductRepositoryImpl(mockOperations);
+		// Use the mockOperations instance to create the ProductRepositoryImpl
+		productRepository = new ProductRepositoryImpl(mockOperations);
 
-        // When
-        Flux<Product> result = productRepository.findByCriteria("test", null,null);
+		// When
+		Flux<Product> result = productRepository.findByCriteria("test", null, null);
 
-        // Then
-        StepVerifier.create(result)
-            .expectNext(product1)
-            .verifyComplete();
+		// Then
+		StepVerifier.create(result).expectNext(product1).verifyComplete();
 
-        // Verify that the expected query was passed to the find method
-        ArgumentCaptor<Query> queryCaptor = ArgumentCaptor.forClass(Query.class);
-        verify(mockOperations).find(queryCaptor.capture(),Mockito.eq(Product.class));
-       // assertEquals(expectedQuery.toString(), queryCaptor.getValue().toString());
-    }
-
+		// Verify that the expected query was passed to the find method
+		ArgumentCaptor<Query> queryCaptor = ArgumentCaptor.forClass(Query.class);
+		verify(mockOperations).find(queryCaptor.capture(), Mockito.eq(Product.class));
+		// assertEquals(expectedQuery.toString(), queryCaptor.getValue().toString());
+	}
 
 }
-

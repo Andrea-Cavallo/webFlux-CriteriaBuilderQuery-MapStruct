@@ -137,9 +137,8 @@
                         <configuration>
                             <outputDirectory>target/jacocoreport</outputDirectory>
 
-                            <excludes>
 
-                            </excludes>
+                            <excludes/>
                         </configuration>
                     </execution>
                 </executions>

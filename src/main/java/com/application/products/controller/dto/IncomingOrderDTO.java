@@ -1,7 +1,5 @@
 package com.application.products.controller.dto;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -17,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class IncomingOrderDTO implements Serializable {
+public class IncomingOrderDTO implements Dto {
 	/**
 	 * 
 	 */
@@ -37,7 +35,7 @@ public class IncomingOrderDTO implements Serializable {
 	@AllArgsConstructor
 	@ToString
 	@EqualsAndHashCode
-	public static class UserRequest implements Serializable {
+	public static class UserRequest implements Dto {
 		/**
 		 * 
 		 */
@@ -55,7 +53,7 @@ public class IncomingOrderDTO implements Serializable {
 	@AllArgsConstructor
 	@ToString
 	@EqualsAndHashCode
-	public static class ProductRequest implements Serializable {
+	public static class ProductRequest implements Dto {
 		/**
 		 * 
 		 */

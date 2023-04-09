@@ -1,7 +1,5 @@
 package com.application.products.controller.dto;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +19,7 @@ import lombok.ToString;
 @ToString
 @Builder
 
-public class ProductDTO implements Serializable {
+public class ProductDTO implements Dto {
 
 	/**
 	 * 

@@ -11,7 +11,22 @@ public final class Utils {
 		// Prevent instantiation
 	}
 
-	public static String mapToJsonString(Object object) {
+	/**
+	 * 
+	 * Converts an object to its JSON string representation.
+	 * 
+	 * @param object the object to convert to a JSON string
+	 * 
+	 * @return the JSON string representation of the object, or an empty string if
+	 *         the input object is null
+	 * 
+	 * @throws RuntimeException if there is an error converting the object to JSON
+	 */
+	public static String mapToJsonString(Object object)  {
+		if (object == null) {
+			return "";
+		}
+
 		try {
 			return objectMapper.writeValueAsString(object);
 		} catch (JsonProcessingException e) {

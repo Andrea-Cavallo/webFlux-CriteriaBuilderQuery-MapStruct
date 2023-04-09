@@ -10,4 +10,7 @@ public interface CustomRepository<T> {
 	Mono<T> save(T document);
 
 	Mono<T> findByName(String documentName);
+
+	Mono<Void> deleteById(String id);
+
 }

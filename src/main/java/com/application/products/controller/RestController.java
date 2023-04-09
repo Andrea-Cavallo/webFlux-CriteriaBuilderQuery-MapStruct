@@ -23,14 +23,23 @@ public class RestController {
 	private final ProductHandler productHandler;
 	private final OrderHandler orderHandler;
 
+	/**
+	 * 
+	 * Configures the RouterFunction for handling HTTP requests.
+	 * 
+	 * @return a RouterFunction that maps incoming HTTP requests to appropriate
+	 *         handlers
+	 */
 	@Bean
 	public RouterFunction<ServerResponse> routes() {
+		// Define the routes for handling HTTP requests
+
 		return RouterFunctions.route()
-				.GET(PRODUCTS, productHandler::findProductsByCriteria)
-				.GET(PRODUCTS_PRODUCT_ID, productHandler::findProductByProductId)
-				.POST(PRODUCTS, productHandler::createProduct)
-				.POST(ORDERS, orderHandler::createOrder)
-				.POST(TRANSCODING, orderHandler::transcode)
+				.GET(PRODUCTS, productHandler::handleCriteria)
+				.GET(PRODUCTS_PRODUCT_ID, productHandler::handleGetById)
+				.POST(PRODUCTS, productHandler::handleCreate)
+				.POST(ORDERS, orderHandler::handleCreate)
+				.POST(TRANSCODING, orderHandler::handleTranscode)
 				.build();
 	}
 

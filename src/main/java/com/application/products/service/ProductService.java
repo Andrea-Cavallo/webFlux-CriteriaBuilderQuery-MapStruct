@@ -14,4 +14,6 @@ public interface ProductService {
 
 	Mono<ProductDTO> findByProductId(String productId);
 
+	Mono<Void> deleteByProductId(String productId);
+
 }
