@@ -56,3 +56,9 @@ local.properties
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+Target/classes
+.factorypath
+.project
+.classpath
+.settings
