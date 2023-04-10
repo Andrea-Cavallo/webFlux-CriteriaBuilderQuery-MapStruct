@@ -1,7 +1,6 @@
 package com.application.products.controller.dto;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

@@ -1,5 +1,9 @@
 package com.application.products.conf;
 
+import static com.application.products.utils.Constants.INITIALIZED_REACTIVE_MONGO_DB_FACTORY;
+import static com.application.products.utils.Constants.INITIALIZED_REACTIVE_MONGO_TEMPLATE;
+import static com.application.products.utils.Constants.MY_LOCAL_HOST;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -14,19 +18,20 @@ import com.mongodb.ConnectionString;
 @Configuration
 @Profile("local")
 public class MongoDbConfigLocal {
+
 	private static final Logger log = LoggerFactory.getLogger(MongoDbConfigLocal.class);
 
 	@Bean
 	public ReactiveMongoDatabaseFactory reactiveMongoDbFactory() {
-		ConnectionString cs = new ConnectionString("mongodb://localhost:27017/productsDB");
-		log.info("Initialized Reactive MongoDB factory");
+		ConnectionString cs = new ConnectionString(MY_LOCAL_HOST);
+		log.info(INITIALIZED_REACTIVE_MONGO_DB_FACTORY);
 		return new SimpleReactiveMongoDatabaseFactory(cs);
 	}
 
 	@Bean
 	public ReactiveMongoTemplate reactiveMongoTemplate() {
 		ReactiveMongoTemplate reactiveMongoTemplate = new ReactiveMongoTemplate(reactiveMongoDbFactory());
-		log.info("Initialized ReactiveMongoTemplate");
+		log.info(INITIALIZED_REACTIVE_MONGO_TEMPLATE);
 		return reactiveMongoTemplate;
 	}
 
