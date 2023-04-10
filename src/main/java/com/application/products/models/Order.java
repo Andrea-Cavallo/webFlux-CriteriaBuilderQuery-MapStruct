@@ -1,7 +1,6 @@
 package com.application.products.models;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

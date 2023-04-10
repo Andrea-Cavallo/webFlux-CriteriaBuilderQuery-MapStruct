@@ -15,7 +15,7 @@ public class RestResponse<T> implements Dto {
 
 	private static final long serialVersionUID = 1L;
 
-	private T output;
+	private  T output;
 
 	private Map<String, String> errorMessages;
 

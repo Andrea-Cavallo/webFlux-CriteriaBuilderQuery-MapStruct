@@ -27,4 +27,16 @@ public class ProductMapper {
 		product.setIsInStock(productDTO.getIsInStock());
 		return product;
 	}
+	
+//	@Mapper MapStruct Example
+//	public interface ProductMapper {
+//	  ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
+//
+//	  @Mapping(target = "isInStock", source = "isInStock")
+//	  ProductDTO toDTO(Product product);
+//
+//	  @Mapping(target = "isInStock", source = "isInStock")
+//	  Product toEntity(ProductDTO productDTO);
+// use with ProductDTO productDTO = ProductMapper.INSTANCE.toDTO(product);
+//	}
 }
